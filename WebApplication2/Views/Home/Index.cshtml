@@ -1,0 +1,42 @@
+﻿@model MyModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.DropDownListFor(m => m.Item1, this.Model.Items)
+    </div>
+    <div class="col-md-4">
+        @Html.DropDownListFor(m => m.Item2, this.Model.Items)
+    </div>
+    <div class="col-md-4">
+        @for (int i = 0; i < this.Model.SubModels.Count; i++)
+        {
+            @Html.TextBoxFor(m => m.SubModels[i].Item1)
+            @Html.DropDownListFor(m => m.SubModels[i].Item1, new SelectList(this.Model.Items, "Value", "Text", this.Model.SubModels[i].Item1))
+            @Html.TextBoxFor(m => m.SubModels[i].Item2)
+            @Html.DropDownListFor(m => m.SubModels[i].Item2, new SelectList(this.Model.Items, "Value", "Text", this.Model.SubModels[i].Item2))
+            <br />
+        }
+    </div>
+</div>
+@Html.EditorFor(m => m.Marker)
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.RadioButtonFor(m => m.Marker, RioMarkers.NoObjectives)
+    </div>
+    <div class="col-md-4">
+        @Html.RadioButtonFor(m => m.Marker, RioMarkers.ASignificantObjective)
+    </div>
+    <div class="col-md-4">
+        @Html.RadioButtonFor(m => m.Marker, RioMarkers.ThePrincipalObjective)
+    </div>
+</div>

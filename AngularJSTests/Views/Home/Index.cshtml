@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section scripts
+{
+    <script src="~/Scripts/select2.js" type="text/javascript"></script>
+    <script src="~/Scripts/angular.js" type="text/javascript"></script>
+    <script src="~/Scripts/Home/IndexController.js" type="text/javascript"></script>
+}
+
+<div class="row" ng-app="personsApp" ng-controller="personsController as pc">
+    <form name="form" novalidate>
+        <input type="hidden" ng-init="personId=123" />
+        <div class="form-group" ng-class="{'has-error': form.personName.$invalid}">
+            <label for="personName">Name</label>
+            <input type="text" class="form-control" id="personName" name="personName" placeholder="Name" ng-model="person.Name" required/>
+            <span ng-show="form.personName.$error.required" class="help-inline">
+                Required
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="personTitle">Title</label>
+            @Html.DropDownList("personTitle", this.ViewBag.Titles as List<SelectListItem>, new { ng_model = "person.Title", convert_to_number = "" })
+        </div>
+
+        <div ng-repeat="phone in person.Phones">
+            <ng-form name="phoneForm">
+                <div class="row form-group"  ng-class="{'has-error': phoneForm.$invalid}">
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" ng-model="phone.CountryPrefix" name="phoneCountryPrefix" required ng-min="1" />
+                        <span ng-show="phoneForm.phoneCountryPrefix.$error.required" class="help-inline">
+                            Required
+                        </span>
+                        <span class="error" ng-show="phoneForm.phoneCountryPrefix.$error.number">
+                            Not valid number!
+                        </span>
+                        <span class="error" ng-show="phoneForm.phoneCountryPrefix.$error.min">
+                            greater than 1
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-model="phone.Number" required name="phoneNumber" />
+                        <span ng-show="phoneForm.phoneNumber.$error.required" class="help-inline">
+                            Required
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("phone", this.ViewBag.PhoneTypes as List<SelectListItem>, new { ng_model = "phone.Type", convert_to_number = "" })
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+
+        <button class="btn btn-default" type="button" ng-click="pc.save()" ng-disabled="form.$invalid">Save</button>
+    </form>
+</div>

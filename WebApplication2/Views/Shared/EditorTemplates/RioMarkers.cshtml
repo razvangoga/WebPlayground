@@ -1,0 +1,15 @@
+﻿@model RioMarkers
+<div class="row">
+    <div class="col-md-4">
+        @Html.RadioButton(Html.NameForModel().ToHtmlString(), this.Model, this.Model == RioMarkers.NoObjectives)
+        @Html.RadioButtonFor(m => this.Model, RioMarkers.NoObjectives)
+    </div>
+    <div class="col-md-4">
+        @Html.RadioButton(Html.NameForModel().ToHtmlString(), this.Model, this.Model == RioMarkers.ASignificantObjective)
+        @Html.RadioButtonFor(m => this.Model, RioMarkers.ASignificantObjective)
+    </div>
+    <div class="col-md-4">
+        @Html.RadioButton(Html.NameForModel().ToHtmlString(), this.Model, this.Model == RioMarkers.ThePrincipalObjective)
+        @Html.RadioButtonFor(m => this.Model, RioMarkers.ThePrincipalObjective)
+    </div>
+</div>
