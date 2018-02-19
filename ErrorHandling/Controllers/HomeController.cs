@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -21,9 +22,16 @@ namespace ErrorHandling.Controllers
             return View();
         }
 
-        public ActionResult Error()
+        public ActionResult Unhandled()
         {
-            return View();
+            this.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            return this.View();
+        }
+
+        public ActionResult NotFound()
+        {
+            this.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return this.View();
         }
 
         public ActionResult Crash()
@@ -46,7 +54,7 @@ namespace ErrorHandling.Controllers
             finally
             {
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Error", "Home");
+                filterContext.Result = RedirectToAction("Unhandled", "Home");
             }
         }
     }
