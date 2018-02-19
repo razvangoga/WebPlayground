@@ -41,13 +41,11 @@ namespace ErrorHandling.Controllers
             {
                 var exception = filterContext.Exception;
                 if (!(exception is HttpException)) //ignore "file not found"
-                    SimpleLogger.Error("OnException", exception);
+                    SimpleLogger.Error($"OnException - {Request.Url}", exception);
             }
             finally
             {
-                //context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Error" }));
-                //context.Result.ExecuteResult(context.Controller.ControllerContext);
-
+                filterContext.ExceptionHandled = true;
                 filterContext.Result = RedirectToAction("Error", "Home");
             }
         }

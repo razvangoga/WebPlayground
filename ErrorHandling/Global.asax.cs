@@ -25,7 +25,7 @@ namespace ErrorHandling
             Exception ex = Server.GetLastError();
 
             if (!(ex is HttpException)) //ignore "file not found"
-                SimpleLogger.Error("Application_Error", ex);
+                SimpleLogger.Error($"Application_Error = {Request.Url}", ex);
         }
     }
 }
